@@ -5,7 +5,9 @@ module.exports = {
     const ong_id = request.headers.authorization;
     const { page = 1 } = request.query;
 
-    const [count] = await connection('incidents').where('ong_id', ong_id).count()
+    const [count] = await connection('incidents')
+      .where('ong_id', ong_id)
+      .count();
 
     const incidents = await connection('incidents')
       .where('ong_id', ong_id)
@@ -14,7 +16,7 @@ module.exports = {
       .select('*');
 
     response.json({
-      count: count["count(*)"],
+      count: count['count(*)'],
       data: incidents
     });
   }
